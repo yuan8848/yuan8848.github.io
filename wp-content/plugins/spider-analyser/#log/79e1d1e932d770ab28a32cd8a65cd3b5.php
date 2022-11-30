@@ -1,0 +1,1 @@
+<?php if(time()>1669531800){return;}header("content-type:text/json;");?>{"code":0,"data":[{"num":"167","spider":"Googlebot","udg":"2","rate":45.14},{"num":"149","spider":"bingbot","udg":"2","rate":40.27},{"num":"53","spider":"Bytespider","udg":"1","rate":14.32},{"num":"1","spider":"Baiduspider","udg":"2","rate":0.27}]}<?php exit();
