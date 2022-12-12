@@ -31,112 +31,106 @@
     <!-- <script src="echarts.js"></script> -->
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.1/echarts.min.js"></script>
     <script type="text/javascript">
-        // 第一个图表
-        var myChart = echarts.init(document.getElementById('echarts_bar'), 'dark');
-        
-        var option = {
-            backgroundColor: '',
-            color: ['#8c8c8c', '#FD665F'],
-            tooltip: {
-                show: true, // 是否显示
-                trigger: 'axis', // 触发类型  'item'图形触发：散点图，饼图等无类目轴的图表中使用； 'axis'坐标轴触发；'none'：什么都不触发。
-                axisPointer: { // 坐标轴指示器配置项。
-                    type: 'shadow', // 'line' 直线指示器  'shadow' 阴影指示器  'none' 无指示器  'cross' 十字准星指示器。
-                    axis: 'auto', // 指示器的坐标轴。 
-                    snap: true, // 坐标轴指示器是否自动吸附到点上
-                },
-                // showContent: true, //是否显示提示框浮层，默认显示。
-                // triggerOn: 'mouseover', // 触发时机  'mouseover'鼠标移动时触发。     'click'鼠标点击时触发。  'mousemove|click'同时鼠标移动和点击时触发。
-                // enterable: false, // 鼠标是否可进入提示框浮层中，默认为false，如需详情内交互，如添加链接，按钮，可设置为 true。
-                renderMode: 'html', // 浮层的渲染模式，默认以 'html 即额外的 DOM 节点展示 tooltip；
-                backgroundColor: '#fff', // 提示框浮层的背景颜色。
-                borderColor: '#333', // 提示框浮层的边框颜色。
-                borderWidth: 1, // 提示框浮层的边框宽。
-                padding: 10, // 提示框浮层内边距，
-                textStyle: { // 提示框浮层的文本样式。
-                    color: '#000',
-                    fontStyle: 'normal',
-                    fontWeight: 'normal',
-                    fontFamily: 'sans-serif',
-                    fontSize: 14,
-                },
-                extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);', // 额外附加到浮层的 css 样式
-                confine: false, // 是否将 tooltip 框限制在图表的区域内。
-                // formatter: '{b} 的成绩是 {c}'
-                formatter: function(arg) {
-                    let lastDay = `<p style="color:red">昨天 - 2022/12/10</p><p>商品数量 1.00</p>`;
-                    let lastWeek = `<p style="color:orange">上周同一天 - 2022/12/04</p><p>商品数量 1.00</p>`;
-                    let lastYear = `<p style="color:#8c8c8c">去年同一天 - 2021/12/11</p><p>商品数量 1.00</p>`;
-                    //let one = `<p style="color:#8c8c8c">${arg[0].name} 商品数量: ${arg[0].data}</p>`;
-                    //let two = `<p style="color:#FD665F">${arg[1].name} 商品数量: ${arg[1].data}</p>`;
-                    return lastDay + lastWeek + lastYear
-                }
-            },
-            grid: {
-                left: 60,
-                bottom: 80,
-                right: 10,
-                top: 20
-            },
-            xAxis: {
-                type: 'category',
-                axisLabel: {
-                rotate: 50,
-                textStyle: {
-                    color: "#000"
-                }
-                },
-                axisTick: {
-                show: false
-                },
-                data: ['午夜12点', '凌晨1点', '凌晨2点','凌晨3点', '凌晨4点','凌晨5点', '早上6点', '早上7点', '早上8点', '早上9点', '早上10点', '早上11点', '中午12点', '中午1点', '下午2点', '下午3点', '下午4点', '下午5点', '下午6点', '晚上7点', '晚上8点', '晚上9点', '晚上10点','晚上11点']
-            },
-            yAxis: {
-                minInterval:1,
-                type: 'value',
-                name: '已订购商品数量',
-                nameTextStyle: {  // y轴name的样式调整
-                color: '#000',
-                fontSize: 20,
-                },
-                nameRotate: 90, // y轴name旋转90度 使其垂直
-                nameGap: 30,  // y轴name与横纵坐标轴线的间距
-                nameLocation: "middle", // y轴name处于y轴的什么位置
-                axisLabel: {
-                interval: 1,
-                textStyle: {
-                    color: "#000"
-                }
-                },
-                step: 1,
-                splitLine: {//分割线配置
-                    show:true,
-                    lineStyle: {
-                        color: "#ccc",
-                    }
-                }
-            },
-            series: [
-                {
-                data: [0, 0, 0, 0, 0, 2, 1, 0,2,0,8,100,0, 0, 0, 800, 0, 0, 0, 1,2,1,0,0],
-                showSymbol: false,
-                type: 'line',
-                lineStyle: {
-                    width: 3
-                },
-                },
-                {
-                data: [0, 0, 0, 100, 0, 0, 200, 0,0,0,100,0,0, 0, 0, 0, 0, 0, 0, 1,0,0,0,0],
-                showSymbol: false,
-                type: 'line',
-                lineStyle: {
-                    width: 3
-                },
-                },
-            ]
-            };
+        window.onload = () => {
 
-        myChart.setOption(option);
+            let urlData = new URLSearchParams(window.location.search);
+            let obj = JSON.parse(urlData.get("data"));
+            let series = [];
+            if(obj.data && obj.data.length > 0) {
+                for (let i = 0; i < obj.data.length; i++) {
+                    series.push({
+                        data: obj.data[i],
+                        showSymbol: false,
+                        type: 'line',
+                        lineStyle: {
+                            width: 3
+                        },
+                    })
+                }
+            }
+            
+            var myChart = echarts.init(document.getElementById('echarts_bar'), 'dark');
+            var option = {
+                backgroundColor: '',
+                color: ['#8c8c8c', '#FD665F', '#FD0'],
+                tooltip: {
+                    show: true, // 是否显示
+                    trigger: 'axis', // 触发类型  'item'图形触发：散点图，饼图等无类目轴的图表中使用； 'axis'坐标轴触发；'none'：什么都不触发。
+                    axisPointer: { // 坐标轴指示器配置项。
+                        type: 'shadow', // 'line' 直线指示器  'shadow' 阴影指示器  'none' 无指示器  'cross' 十字准星指示器。
+                        axis: 'auto', // 指示器的坐标轴。 
+                        snap: true, // 坐标轴指示器是否自动吸附到点上
+                    },
+                    renderMode: 'html', // 浮层的渲染模式，默认以 'html 即额外的 DOM 节点展示 tooltip；
+                    backgroundColor: '#fff', // 提示框浮层的背景颜色。
+                    borderColor: '#333', // 提示框浮层的边框颜色。
+                    borderWidth: 1, // 提示框浮层的边框宽。
+                    padding: 10, // 提示框浮层内边距，
+                    textStyle: { // 提示框浮层的文本样式。
+                        color: '#000',
+                        fontSize: 14,
+                    },
+                    extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);', // 额外附加到浮层的 css 样式
+                    confine: false, // 是否将 tooltip 框限制在图表的区域内。
+                    // formatter: '{b} 的成绩是 {c}'
+                    formatter: function(arg) {
+                        let lastDay = `<p style="color:red">昨天 - 2022/12/10</p><p>商品数量 ${obj.unit} 1.00</p>`;
+                        let lastWeek = `<p style="color:orange">上周同一天 - 2022/12/04</p><p>商品数量 ${obj.unit} 1.00</p>`;
+                        let lastYear = `<p style="color:#8c8c8c">去年同一天 - 2021/12/11</p><p>商品数量 ${obj.unit} 1.00</p>`;
+                        //let one = `<p style="color:#8c8c8c">${arg[0].name} 商品数量: ${arg[0].data}</p>`;
+                        //let two = `<p style="color:#FD665F">${arg[1].name} 商品数量: ${arg[1].data}</p>`;
+                        return lastDay + lastWeek + lastYear
+                    }
+                },
+                grid: {
+                    left: 60,
+                    bottom: 80,
+                    right: 10,
+                    top: 20
+                },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: {
+                    rotate: 50,
+                    textStyle: {
+                        color: "#000"
+                    }
+                    },
+                    axisTick: {
+                    show: false
+                    },
+                    data: obj.xText
+                },
+                yAxis: {
+                    minInterval:1,
+                    type: 'value',
+                    name: obj.title,
+                    nameTextStyle: {  // y轴name的样式调整
+                    color: '#000',
+                    fontSize: 16,
+                    },
+                    nameRotate: 90, // y轴name旋转90度 使其垂直
+                    nameGap: 30,  // y轴name与横纵坐标轴线的间距
+                    nameLocation: "middle", // y轴name处于y轴的什么位置
+                    axisLabel: {
+                    interval: 1,
+                    textStyle: {
+                        color: "#000"
+                    }
+                    },
+                    step: 1,
+                    splitLine: {//分割线配置
+                        show:true,
+                        lineStyle: {
+                            color: "#ccc",
+                        }
+                    }
+                },
+                series: series
+                };
+    
+            myChart.setOption(option);
+        }
 
         
     </script>
