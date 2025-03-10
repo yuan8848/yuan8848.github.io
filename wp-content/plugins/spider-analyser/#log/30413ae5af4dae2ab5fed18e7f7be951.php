@@ -1,1 +1,0 @@
-<?php if(time()>1669528800){return;}header("content-type:text/json;");?>{"code":0,"data":[{"spider":"4","url":"370","avg_url":93},{"spider":"5","url":"753","avg_url":151},{"spider":2,"url":179,"avg_url":90}]}<?php exit();
